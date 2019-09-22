@@ -1,0 +1,56 @@
+package com.example.myapplication
+
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.view.View
+import android.webkit.WebResourceRequest
+import android.webkit.WebSettings
+import android.webkit.WebView
+import android.webkit.WebViewClient
+import kotlinx.android.synthetic.main.activity_main.*
+import android.webkit.WebChromeClient as WebChromeClient1
+
+class MainActivity : AppCompatActivity() {
+    var mywebview:WebView?=null
+    var websetting:WebSettings?=null
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        mywebview=findViewById(R.id.webview)
+        websetting=mywebview!!.settings
+        websetting!!.javaScriptEnabled=true
+        websetting!!.setRenderPriority(WebSettings.RenderPriority.HIGH)
+        websetting!!.cacheMode=WebSettings.LOAD_CACHE_ELSE_NETWORK
+        websetting!!.setAppCacheEnabled(true)
+        websetting!!.domStorageEnabled=true
+        websetting!!.layoutAlgorithm=WebSettings.LayoutAlgorithm.NARROW_COLUMNS
+        websetting!!.useWideViewPort=true
+        websetting!!.savePassword=true
+        websetting!!.saveFormData=true
+        websetting!!.setEnableSmoothTransition(true)
+        mywebview!!.scrollBarStyle=View.SCROLLBARS_INSIDE_OVERLAY
+        mywebview!!.loadUrl("https://www.au.edu.pk")
+        mywebview!!.webViewClient=object : WebViewClient(){
+             override fun shouldOverrideUrlLoading(
+                view: WebView?,
+                url:String?
+            ): Boolean {
+
+                view!!.loadUrl(url)
+                return true
+            }
+
+
+        }
+
+    }
+
+    override fun onBackPressed() {
+        if(mywebview!!.canGoBack()){
+            mywebview!!.goBack()
+        }else{
+        super.onBackPressed()
+        }
+    }
+
+}
